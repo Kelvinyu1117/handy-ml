@@ -27,6 +27,7 @@ def dbscan(data, eps, min_pts):
         f'core points: {list(map(lambda p: p + 1, core_points))} \nborder points: {list(map(lambda p: p + 1, border_point))} \nnoise points: {list(map(lambda p: p + 1, noise_points))}')
 
     clusters = []
+    not_allocated = []
     has_visited = [False for i in range(len(neighorbood))]
 
     def get_all_density_reachable(pt, neighorbood, has_visited):
@@ -51,8 +52,11 @@ def dbscan(data, eps, min_pts):
         if(pt in core_points):
             pts = list(get_all_density_reachable(pt, neighorbood, has_visited))
             clusters.append(pts)
+        elif(pt in border_point):
+            continue
+        else:
+            not_allocated.append(pt)
 
-    not_allocated = [i for i in range(len(has_visited)) if not has_visited[i]]
     for i in range(len(clusters)):
         print(f'C{i + 1}: {list(map(lambda p: p + 1, clusters[i]))}')
 
