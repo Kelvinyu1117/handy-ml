@@ -35,8 +35,38 @@ def cosine_distance(X):
 
 
 """
+X: nxm matrix (n features, m observations)
+"""
+
+
+def pca(X):
+    mu = np.mean(X)
+    x_tilde = X - mu
+
+    print(f'mu = {mu}, x_tilde = {x_tilde}')
+
+    cov_X = np.cov(x_tilde, bias=True)
+    print(f'cov_X = {cov_X}')
+
+    eigen_values, eigen_vectors_norm = linalg.eig(cov_X)
+
+    print(
+        f'eigen_values = {eigen_values}, eigen_vectors_norm = {eigen_vectors_norm}')
+
+
+"""
 row: # of observation
 column: # of features
 """
 if __name__ == '__main__':
-    pass
+    X = np.array(
+        [
+            [-1, -2],
+            [-1, 0],
+            [0, 0],
+            [2, 1],
+            [0, 1]
+        ]
+    )
+
+    pca(X.T)
