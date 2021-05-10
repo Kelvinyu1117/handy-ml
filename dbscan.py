@@ -9,7 +9,7 @@ def dbscan(data, eps, min_pts):
     for i in range(data.shape[0]):
         neighorbood.append([j for j in range(data.shape[0])
                             if dist_matrix[i][j] <= eps])
-
+    print(f"0-index:{neighorbood}")
     core_points = [i for i, pt in enumerate(neighorbood) if len(pt) >= min_pts]
 
     border_point_candidates = list(set([i for i in range(len(neighorbood))])
@@ -24,7 +24,7 @@ def dbscan(data, eps, min_pts):
         len(neighorbood)) if not i in core_points and not i in border_point]
 
     print(
-        f'core points: {list(map(lambda p: p + 1, core_points))} \nborder points: {list(map(lambda p: p + 1, border_point))} \nnoise points: {list(map(lambda p: p + 1, noise_points))}')
+        f'core points: {list(map(lambda p: p + 1, core_points))} \nborder points: {list(map(lambda p: p + 1, border_point))} \nnoise points (outliers): {list(map(lambda p: p + 1, noise_points))}')
 
     clusters = []
     not_allocated = []
@@ -64,6 +64,6 @@ def dbscan(data, eps, min_pts):
 
 
 if __name__ == '__main__':
-    data = np.array([[0, 0], [1, 0], [1, 1], [2, 2], [
-                    3, 1], [3, 0], [0, 1], [3, 2], [6, 3]])
-    dbscan(data, 1, 3)
+    data = np.array([[2, 10], [2, 5], [8, 4], [5, 8], [
+                    7, 5], [6, 4], [1, 2], [4, 9]])
+    dbscan(data, np.sqrt(10), 2)
